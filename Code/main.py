@@ -111,3 +111,57 @@ history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds, batc
 
 MODEL_PATH = r"/mnt/c/Users/Felicia Pangestu/Documents/BANGKIT/Capstone/model/ecobin_model8.h5"
 model.save(MODEL_PATH)
+
+# Preprocess the input image
+image = tf.keras.utils.load_img('path/to/image.jpg', target_size=(256, 256))
+image = tf.keras.utils.img_to_array(image)
+image = np.expand_dims(image, axis=0)
+
+# Make a prediction
+prediction = model.predict(image)
+
+# Get the predicted class
+predicted_class = np.argmax(prediction[0])
+
+# Print the predicted class
+print(f"Predicted class: {CLASSES[predicted_class]}")
+
+# Evaluate the model on the test set
+test_ds = create_datasets(PATH_DATASET)[2]
+loss, accuracy = model.evaluate(test_ds)
+
+# Print the accuracy and loss
+print(f"Accuracy: {accuracy}")
+print(f"Loss: {loss}")
+
+# Plot accuracy and loss over epochs
+plt.plot(history.history['accuracy'], label='Accuracy')
+plt.plot(history.history['loss'], label='Loss')
+plt.title('Accuracy and Loss Over Epochs')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy/Loss')
+plt.legend()
+plt.show()
+
+def f1_score(y_true, y_pred, average='macro'):
+  """
+  Calculates the F1 score, a measure of the accuracy of a classification model.
+
+  Args:
+    y_true: True labels for the data.
+    y_pred: Predicted labels for the data.
+    average: The type of averaging to use when calculating the F1 score. Options are 'macro', 'micro', and 'weighted'.
+
+  Returns:
+    The F1 score as a float.
+  """
+
+  return f1_score(y_true, y_pred, average=average)
+
+# Calculate F1 score
+y_true = np.argmax(test_ds.labels, axis=1)
+y_pred = np.argmax(model.predict(test_ds), axis=1)
+f1_score = f1_score(y_true, y_pred, average='macro')
+
+# Print the F1 score
+print(f"F1 score: {f1_score}")
