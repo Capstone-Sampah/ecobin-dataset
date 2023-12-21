@@ -1,0 +1,178 @@
+MODEL 1
+model = Sequential(
+    data_augmentation,
+    base_model,
+    tf.keras.layers.GlobalAveragePooling2D(),
+    Dense(len(CLASSES), activation='softmax')
+])
+learning_rate = 0.0005
+history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds)
+
+MODEL 2
+model = Sequential(
+    data_augmentation,
+    base_model,
+    Conv2D(128, (3, 3), activation='relu', input_shape=IMG_SHAPE),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(512, activation='relu'),
+    Dropout(0.2),
+    Dense(len(CLASSES), activation='softmax')
+])
+learning_rate = 0.0005
+history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds)
+
+MODEL 3
+model = Sequential([
+    data_augmentation,
+    base_model,
+    Conv2D(256, (3, 3), activation='relu', input_shape=IMG_SHAPE),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(512, activation='relu'),
+    Dropout(0.2),
+    Dense(len(CLASSES), activation='softmax')
+])
+learning_rate = 0.0005
+    epochs = 30
+    batch_size = 16
+    history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds, batch_size=batch_size)
+    Epoch 28/30
+455/455 [==============================] - 49s 108ms/step - loss: 0.2214 - accuracy: 0.9256 - val_loss: 0.3070 - val_accuracy: 0.9276
+Epoch 29/30
+455/455 [==============================] - 49s 108ms/step - loss: 0.2222 - accuracy: 0.9288 - val_loss: 0.3205 - val_accuracy: 0.9218
+Epoch 30/30
+455/455 [==============================] - 49s 108ms/step - loss: 0.2163 - accuracy: 0.9266 - val_loss: 0.2982 - val_accuracy: 0.9268
+-----------------------------------------------
+data_augmentation = tf.keras.Sequential([
+    tf.keras.layers.experimental.preprocessing.Rescaling(1./127.5, offset= -1),
+    tf.keras.layers.experimental.preprocessing.RandomFlip("horizontal_and_vertical"),
+    tf.keras.layers.experimental.preprocessing.RandomRotation(0.2),
+    tf.keras.layers.experimental.preprocessing.RandomZoom(0.2),
+    tf.keras.layers.experimental.preprocessing.RandomContrast(0.4),
+    tf.keras.layers.experimental.preprocessing.RandomTranslation(0.1, 0.1),
+], name='data_augmentation')
+
+
+MODEL4
+data_augmentation = tf.keras.Sequential([
+    tf.keras.layers.experimental.preprocessing.Rescaling(1./127.5, offset= -1),
+    tf.keras.layers.experimental.preprocessing.RandomFlip("horizontal_and_vertical"),
+    tf.keras.layers.experimental.preprocessing.RandomRotation(0.1),
+    tf.keras.layers.experimental.preprocessing.RandomZoom(0.1),
+    tf.keras.layers.experimental.preprocessing.RandomContrast(0.3),
+    tf.keras.layers.experimental.preprocessing.RandomTranslation(0.1, 0.1),
+], name='data_augmentation')
+model = Sequential([
+    data_augmentation,
+    base_model,
+    Conv2D(256, (3, 3), activation='relu', input_shape=IMG_SHAPE),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(256, activation='relu'),
+    Dense(512, activation='relu'),
+    Dense(len(CLASSES), activation='softmax')
+])
+learning_rate = 0.0001
+model.compile(
+    loss='categorical_crossentropy',
+    optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+    metrics=['accuracy']
+)
+epochs = 50
+batch_size = 48
+history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds, batch_size=batch_size)
+
+Epoch 48/50
+455/455 [==============================] - 50s 110ms/step - loss: 0.0910 - accuracy: 0.9690 - val_loss: 0.2954 - val_accuracy: 0.9326
+Epoch 49/50
+455/455 [==============================] - 51s 111ms/step - loss: 0.0913 - accuracy: 0.9682 - val_loss: 0.3252 - val_accuracy: 0.9261
+Epoch 50/50
+455/455 [==============================] - 50s 110ms/step - loss: 0.0783 - accuracy: 0.9723 - val_loss: 0.2799 - val_accuracy: 0.9349
+
+
+MODEL 5
+data_augmentation = tf.keras.Sequential([
+    tf.keras.layers.experimental.preprocessing.Rescaling(1./127.5, offset= -1),
+    tf.keras.layers.experimental.preprocessing.RandomFlip("horizontal_and_vertical"),
+    tf.keras.layers.experimental.preprocessing.RandomRotation(0.3),
+    tf.keras.layers.experimental.preprocessing.RandomZoom(0.3),
+    tf.keras.layers.experimental.preprocessing.RandomContrast(0.5),
+    tf.keras.layers.experimental.preprocessing.RandomTranslation(0.3, 0.3),
+], name='data_augmentation')
+model = Sequential([
+    data_augmentation,
+    base_model,
+    Conv2D(512, (3, 3), activation='relu', input_shape=IMG_SHAPE),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(1024, activation='relu'),
+    Dense(len(CLASSES), activation='softmax')
+])
+learning_rate = 0.0001
+model.compile(
+    loss='categorical_crossentropy',
+    optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+    metrics=['accuracy']
+)
+
+epochs = 75
+batch_size = 48
+history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds, batch_size=batch_size)
+
+Epoch 65/75
+455/455 [==============================] - 51s 112ms/step - loss: 0.1935 - accuracy: 0.9346 - val_loss: 0.2428 - val_accuracy: 0.9342
+Epoch 66/75
+455/455 [==============================] - 49s 108ms/step - loss: 0.1862 - accuracy: 0.9365 - val_loss: 0.2782 - val_accuracy: 0.9276
+Epoch 67/75
+455/455 [==============================] - 50s 109ms/step - loss: 0.1935 - accuracy: 0.9325 - val_loss: 0.2655 - val_accuracy: 0.9261
+Epoch 68/75
+455/455 [==============================] - 49s 108ms/step - loss: 0.2041 - accuracy: 0.9285 - val_loss: 0.2451 - val_accuracy: 0.9311
+Epoch 69/75
+455/455 [==============================] - 49s 108ms/step - loss: 0.1798 - accuracy: 0.9374 - val_loss: 0.2739 - val_accuracy: 0.9291
+Epoch 70/75
+455/455 [==============================] - 49s 108ms/step - loss: 0.1825 - accuracy: 0.9372 - val_loss: 0.2755 - val_accuracy: 0.9280
+Epoch 71/75
+455/455 [==============================] - 50s 109ms/step - loss: 0.1872 - accuracy: 0.9360 - val_loss: 0.2443 - val_accuracy: 0.9315
+Epoch 72/75
+455/455 [==============================] - 51s 111ms/step - loss: 0.1830 - accuracy: 0.9370 - val_loss: 0.2506 - val_accuracy: 0.9265
+Epoch 73/75
+455/455 [==============================] - 49s 108ms/step - loss: 0.1857 - accuracy: 0.9362 - val_loss: 0.2544 - val_accuracy: 0.9272
+Epoch 74/75
+455/455 [==============================] - 50s 109ms/step - loss: 0.1790 - accuracy: 0.9370 - val_loss: 0.2896 - val_accuracy: 0.9249
+Epoch 75/75
+455/455 [==============================] - 50s 109ms/step - loss: 0.1813 - accuracy: 0.9355 - val_loss: 0.2872 - val_accuracy: 0.9303
+
+
+MODEL 7
+data_augmentation = tf.keras.Sequential([
+    tf.keras.layers.experimental.preprocessing.Rescaling(1./127.5, offset= -1),
+    tf.keras.layers.experimental.preprocessing.RandomFlip("horizontal_and_vertical"),
+    tf.keras.layers.experimental.preprocessing.RandomRotation(0.3),
+    tf.keras.layers.experimental.preprocessing.RandomZoom(0.3),
+    tf.keras.layers.experimental.preprocessing.RandomContrast(0.5),
+    tf.keras.layers.experimental.preprocessing.RandomTranslation(0.3, 0.3),
+], name='data_augmentation')
+
+model = Sequential([
+    data_augmentation,
+    base_model,
+    Conv2D(128, (3, 3), activation='relu', input_shape=IMG_SHAPE),
+    Conv2D(512, (3, 3), activation='relu'),
+    # MaxPooling2D(pool_size=(2, 2)),
+    # Flatten(),
+    GlobalAveragePooling2D(),
+    Dense(1024, activation='relu'),
+    Dense(len(CLASSES), activation='softmax')
+])
+
+learning_rate = 0.0001
+model.compile(
+    loss='categorical_crossentropy',
+    optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+    metrics=['accuracy']
+)
+
+epochs = 75
+batch_size = 48
+history = model.fit(train_ds, epochs=epochs, validation_data=validation_ds, batch_size=batch_size)
