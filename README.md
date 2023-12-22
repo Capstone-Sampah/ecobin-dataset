@@ -12,11 +12,11 @@ EcoBin is a waste classification model that utilizes transfer learning and data 
 To use the EcoBin model, follow these steps:
 
 1. **Install the required dependencies:**
-   - TensorFlow
-   - Keras
-   - NumPy
-   - Matplotlib
-   - Scikit-learn
+   - TensorFlow: `2.13.0`
+   - Keras: `2.13.1`
+   - NumPy: `1.24.3`
+   - Matplotlib: `1.24.3`
+   - Scikit-learn: `1.3.2`
 
 2. **Load the pre-trained model:**
    ```python
@@ -36,8 +36,44 @@ To use the EcoBin model, follow these steps:
 5. **Interpret the prediction:**
    The model will output a probability distribution over the six waste classes. The class with the highest probability is the predicted class for the input image.
 
+### Dataset Information:
+#### Class Distribution:
+
+| Class          | Total Photos |
+| -------------- | ------------ |
+| Biodegradable | 2221         |
+| Cardboard      | 1867         |
+| Glass          | 3176         |
+| Metal          | 1660         |
+| Paper          | 2422         |
+| Plastic        | 1645         |
+
+- **Total Classes:** 6
+- **Total Photos:** 12,991
+
+#### Dataset Split:
+
+- Training Set: 70%
+- Validation Set: 20%
+- Test Set: 10%
+
+#### Class Distribution in Each Set:
+
+| Class         | Train Set | Validation Set | Test Set | Total |
+|---------------|-----------|-----------------|----------|-------|
+| Biodegradable | 1,554     | 444             | 223      | 2,221 |
+| Cardboard     | 1,306     | 374             | 187      | 1,867 |
+| Glass         | 2,223     | 635             | 318      | 3,176 |
+| Metal         | 1,161     | 332             | 167      | 1,660 |
+| Paper         | 1,696     | 483             | 243      | 2,422 |
+| Plastic       | 1,151     | 329             | 165      | 1,645 |
+
 ### Evaluation
-The EcoBin model was evaluated on a held-out test set and achieved an accuracy of 95%. This demonstrates the model's ability to accurately classify waste items, even when presented with images that it has not seen during training.
+The EcoBin model was evaluated on a held-out test set and achieved an accuracy of 94%.
+- **Validation Loss:** 0.1578
+- **Validation Accuracy:** 94.40%
+#### This indicates the model's ability to accurately classify waste items on unseen data, showcasing its robustness and effectiveness.
+![Epoch Accuracy and Loss](https://github.com/Ecobin-Capstone/ecobin-waste-classifier/assets/103976140/cc4085c8-305b-4eef-9119-8e76ea4a5c9a)
 
 ### Applications
 The EcoBin model can be used in a variety of applications, including:
